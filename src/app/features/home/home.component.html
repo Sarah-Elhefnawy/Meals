@@ -1,0 +1,153 @@
+<div class="homepage">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <div class="hero-content">
+        <h1 class="hero-title">Discover Culinary Magic</h1>
+        <p class="hero-subtitle">Explore thousands of delicious recipes from around the world. Cook like a pro with our curated collection!</p>
+        <div class="hero-actions">
+          <p-button 
+            label="Explore Recipes" 
+            icon="pi pi-search" 
+            styleClass="p-button-primary p-button-lg"
+            routerLink="/categories">
+          </p-button>
+          <p-button 
+            label="Get Random Recipe" 
+            icon="pi pi-random" 
+            styleClass="p-button-outlined p-button-lg">
+          </p-button>
+          <!-- <p-button 
+            label="Get Random Recipe" 
+            icon="pi pi-random" 
+            styleClass="p-button-outlined p-button-lg"
+            (onClick)="getRandomRecipe()">
+          </p-button> -->
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">1000+</span>
+            <span class="stat-label">Recipes</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Categories</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">30+</span>
+            <span class="stat-label">Countries</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Your Kitchen Companion</h2>
+          <p>Welcome to Recipe Finder, your ultimate destination for culinary inspiration. We believe that cooking should be accessible, enjoyable, and delicious for everyone.</p>
+          <p>Powered by TheMealDB API, we bring you authentic recipes from every corner of the globe. Whether you're a beginner cook or a seasoned chef, you'll find something to spark your creativity.</p>
+          <div class="features-grid">
+            <div class="feature">
+              <i class="pi pi-globe" style="color: #4CAF50;"></i>
+              <span>Global Cuisines</span>
+            </div>
+            <div class="feature">
+              <i class="pi pi-clock" style="color: #FF9800;"></i>
+              <span>Quick & Easy</span>
+            </div>
+            <div class="feature">
+              <i class="pi pi-heart" style="color: #F44336;"></i>
+              <span>Dietary Options</span>
+            </div>
+            <div class="feature">
+              <i class="pi pi-star" style="color: #FFD700;"></i>
+              <span>Chef Curated</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="./Home/homeeee.jpg" alt="Cooking Illustration" class="illustration">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Sections -->
+  <section class="gallery-section">
+    <div class="container">
+      
+      <!-- Categories Gallery -->
+      <div class="gallery-category">
+        <div class="section-header">
+          <h2>Browse by Category</h2>
+          <p>Find recipes that match your mood and occasion</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-card" *ngFor="let category of categories">
+            <div class="card-image">
+              <img [src]="category.thumbnail" [alt]="category.name">
+              <div class="card-overlay">
+                <h3>{{category.name}}</h3>
+                <p>{{category.count}} recipes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Areas Gallery -->
+      <div class="gallery-category">
+        <div class="section-header">
+          <h2>Explore by Region</h2>
+          <p>Travel the world through your taste buds</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-card" *ngFor="let area of areas">
+            <div class="card-image area-card">
+              <img [src]="area.flag" [alt]="area.name">
+              <div class="card-overlay">
+                <h3>{{area.name}} Cuisine</h3>
+                <p>Traditional flavors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ingredients Gallery -->
+      <div class="gallery-category">
+        <div class="section-header">
+          <h2>Cook by Ingredient</h2>
+          <p>Make the most of what's in your pantry</p>
+        </div>
+        <div class="ingredients-grid">
+          <div class="ingredient-card" *ngFor="let ingredient of ingredients">
+            <img [src]="ingredient.image" [alt]="ingredient.name">
+            <span>{{ingredient.name}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <!-- <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Start Cooking?</h2>
+        <p>Join thousands of home cooks discovering new recipes every day</p>
+        <p-button 
+          label="Browse All Recipes" 
+          icon="pi pi-arrow-right" 
+          styleClass="p-button-primary p-button-lg"
+          routerLink="/categories">
+        </p-button>
+      </div>
+    </div>
+  </section> -->
+</div>
