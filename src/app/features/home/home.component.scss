@@ -85,7 +85,7 @@
 /* About Section */
 .about-section {
   padding: 5rem 0;
-//   background: #210F0D;
+  //   background: #210F0D;
 }
 
 .container {
@@ -140,7 +140,7 @@
 /* Gallery Sections */
 .gallery-section {
   padding: 5rem 0;
-  background: 
+  background:
     radial-gradient(ellipse at top, #404E3D 0%, transparent 50%),
     radial-gradient(ellipse at bottom, #67372A 0%, transparent 50%),
     #141314;
@@ -281,29 +281,38 @@
   opacity: 0.9;
 }
 
+/* Frequent Questions Sections */
+.question-section {
+  padding: 5rem 0;
+}
+
+.questions-p {
+  margin: 0;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.1rem;
   }
-  
+
   .about-content {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .gallery-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-  
+
   .ingredients-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }

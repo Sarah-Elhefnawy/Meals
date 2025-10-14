@@ -1,1 +1,35 @@
-<p>categories works!</p>
+<p-tabs value="0" scrollable>
+    <p-tablist>
+        <ng-template #previcon>
+            <i class="pi pi-chevron-left"></i>
+        </ng-template>
+
+        @for(item of category; track item.idCategory; let i = $index) {
+        <p-tab [value]="i.toString()" class="flex items-center !gap-2">
+            <span class="font-bold whitespace-nowrap">{{item.strCategory}}</span> <!-- Use actual category name -->
+        </p-tab>
+        }
+
+        <ng-template #nexticon>
+            <i class="pi pi-chevron-right"></i>
+        </ng-template>
+    </p-tablist>
+
+    <p-tabpanels>
+        @for(item of category; track item.idCategory; let i = $index) {
+        <p-tabpanel [value]="i.toString()">
+            <div class="simple-category-content">
+                <div class="simple-image">
+                    <img [src]="item.strCategoryThumb" [alt]="item.strCategory" class="simple-category-img" />
+                </div>
+                <div class="simple-description">
+                    <h3 class="simple-title">{{item.strCategory}}</h3>
+                    <p class="simple-text">{{item.strCategoryDescription}}</p>
+                    <p-button routerLink="" [label]="'View ' + item.strCategory + ' Recipes'" icon="pi pi-arrow-right"
+                        styleClass="p-button-text p-button-plain" />
+                </div>
+            </div>
+        </p-tabpanel>
+        }
+    </p-tabpanels>
+</p-tabs>
