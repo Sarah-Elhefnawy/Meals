@@ -1,35 +1,75 @@
-<p-tabs value="0" scrollable>
-    <p-tablist>
-        <ng-template #previcon>
-            <i class="pi pi-chevron-left"></i>
-        </ng-template>
+<div class="categories-container">
+  <!-- Header Section -->
+  <section class="categories-header">
+    <div class="header-content">
+      <h1 class="page-title">Recipe Categories</h1>
+      <p class="page-subtitle">Discover amazing recipes organized by category. Find your next culinary adventure!</p>
+    </div>
+  </section>
 
-        @for(item of category; track item.idCategory; let i = $index) {
-        <p-tab [value]="i.toString()" class="flex items-center !gap-2">
-            <span class="font-bold whitespace-nowrap">{{item.strCategory}}</span> <!-- Use actual category name -->
-        </p-tab>
-        }
+  <!-- Loading State -->
+  @if (loading) {
+    <div class="loading-section">
+      <p-progressSpinner styleClass="custom-spinner" strokeWidth="4" />
+      <p class="loading-text">Loading delicious categories...</p>
+    </div>
+  }
 
-        <ng-template #nexticon>
-            <i class="pi pi-chevron-right"></i>
-        </ng-template>
-    </p-tablist>
-
-    <p-tabpanels>
-        @for(item of category; track item.idCategory; let i = $index) {
-        <p-tabpanel [value]="i.toString()">
-            <div class="simple-category-content">
-                <div class="simple-image">
-                    <img [src]="item.strCategoryThumb" [alt]="item.strCategory" class="simple-category-img" />
+  <!-- Categories Grid -->
+  @if (!loading && categories.length > 0) {
+    <section class="categories-grid-section">
+      <div class="grid-container">
+        @for (category of categories; track category.idCategory) {
+          <p-card class="category-card">
+            <ng-template pTemplate="header">
+              <div class="card-image-container">
+                <img 
+                  [src]="category.strCategoryThumb" 
+                  [alt]="category.strCategory" 
+                  class="category-image"
+                />
+                <div class="image-overlay">
+                  <p-tag 
+                    [value]="category.strCategory" 
+                    styleClass="category-tag" 
+                  />
                 </div>
-                <div class="simple-description">
-                    <h3 class="simple-title">{{item.strCategory}}</h3>
-                    <p class="simple-text">{{item.strCategoryDescription}}</p>
-                    <p-button routerLink="" [label]="'View ' + item.strCategory + ' Recipes'" icon="pi pi-arrow-right"
-                        styleClass="p-button-text p-button-plain" />
-                </div>
+              </div>
+            </ng-template>
+
+            <div class="card-content">
+              <h3 class="category-name">{{ category.strCategory }}</h3>
+              <p class="category-description">
+                {{ (category.strCategoryDescription | slice:0:120) + '...' }}
+              </p>
+              
+              <div class="card-actions">
+                <p-button 
+                  label="Explore Recipes" 
+                  icon="pi pi-arrow-right" 
+                  styleClass="explore-btn"
+                  (click)="getCategoryMeals(category.strCategory)"
+                />
+              </div>
             </div>
-        </p-tabpanel>
+          </p-card>
         }
-    </p-tabpanels>
-</p-tabs>
+      </div>
+    </section>
+  }
+
+  <!-- Empty State -->
+  @if (!loading && categories.length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-inbox"></i>
+      <h3>No Categories Found</h3>
+      <p>Unable to load recipe categories. Please try again later.</p>
+      <p-button 
+        label="Retry" 
+        icon="pi pi-refresh" 
+        styleClass="retry-btn"
+        (click)="getCategories()"
+      />
+    </div>
+  }
+</div>

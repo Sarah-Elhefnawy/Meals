@@ -1,0 +1,87 @@
+<div class="recipes-container">
+  <!-- Header with Back Button -->
+  <header class="recipes-header">
+    <div class="header-content">
+      <p-button 
+        icon="pi pi-arrow-left" 
+        styleClass="back-btn p-button-text"
+        (click)="goBack()"
+      />
+      <div class="header-text">
+        <h1 class="page-title">{{ categoryName }} Recipes</h1>
+        <p class="recipe-count">{{ mealRecipes.length }} delicious recipes found</p>
+      </div>
+      <div class="header-actions">
+        <p-button 
+          icon="pi pi-sort-alt" 
+          label="Sort" 
+          styleClass="sort-btn"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- Empty State -->
+  @if (mealRecipes.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🍳</div>
+      <h3>No Recipes Found</h3>
+      <p>We couldn't find any recipes for this category.</p>
+      <p-button 
+        label="Back to Categories" 
+        icon="pi pi-arrow-left"
+        styleClass="empty-btn"
+        (click)="goBack()"
+      />
+    </div>
+  }
+
+  <!-- Masonry Grid -->
+  @if (mealRecipes.length > 0) {
+    <div class="masonry-grid">
+      @for (recipe of mealRecipes; track recipe.idMeal; let i = $index) {
+        <div class="masonry-item" [style.animation-delay]="i * 0.1 + 's'">
+          <p-card class="recipe-card">
+            <!-- Recipe Image -->
+            <div class="card-image" (click)="viewRecipeDetail(recipe)">
+              <img 
+                [src]="recipe.strMealThumb" 
+                [alt]="recipe.strMeal"
+                class="recipe-image"
+              />
+              <div class="image-overlay">
+                <p-tag 
+                  value="View Recipe" 
+                  styleClass="view-tag"
+                />
+              </div>
+              <div class="recipe-badge">
+                <i class="pi pi-heart"></i>
+              </div>
+            </div>
+
+            <!-- Card Content -->
+            <div class="card-content">
+              <h3 class="recipe-title" [pTooltip]="recipe.strMeal" tooltipPosition="top">
+                {{ recipe.strMeal }}
+              </h3>
+              
+              <div class="recipe-meta">
+                <span class="recipe-id">#{{ recipe.idMeal }}</span>
+                <div class="action-buttons">
+                  <p-button 
+                    icon="pi pi-eye" 
+                    styleClass="p-button-text p-button-plain view-btn"
+                    (click)="viewRecipeDetail(recipe)"
+                    pTooltip="View Full Recipe" 
+                    tooltipPosition="left"
+                  />
+                </div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      }
+    </div>
+  }
+</div>

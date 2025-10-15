@@ -1,0 +1,84 @@
+<div class="recipe-detail-container">
+    <!-- Loading State -->
+    @if (loading) {
+    <div class="loading-section">
+        <p-progressSpinner styleClass="custom-spinner" strokeWidth="4" />
+        <p class="loading-text">Loading recipe details...</p>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (error && !loading) {
+    <div class="error-section">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem; color: #f44336;"></i>
+        <h3>Error Loading Recipe</h3>
+        <p>{{ error }}</p>
+        <p-button label="Go Back" icon="pi pi-arrow-left" styleClass="p-button-outlined" (click)="goBack()" />
+    </div>
+    }
+
+    <!-- Recipe Content -->
+    @if (recipe && !loading) {
+    <div class="recipe-content">
+        <!-- Header -->
+        <header class="recipe-header">
+            <p-button icon="pi pi-arrow-left" styleClass="back-btn p-button-text" (click)="goBack()" />
+            <div class="header-content">
+                <h1 class="recipe-title">{{ recipe.strMeal }}</h1>
+                <div class="recipe-meta">
+                    <p-tag [value]="recipe.strCategory" styleClass="category-tag" />
+                    <p-tag [value]="recipe.strArea" styleClass="area-tag" />
+                    @for (tag of getTagsArray(recipe.strTags); track tag) {
+                    <p-tag [value]="tag" styleClass="custom-tag" />
+                    }
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="recipe-hero">
+            <div class="recipe-image-section">
+                <img [src]="recipe.strMealThumb" [alt]="recipe.strMeal" class="main-image" />
+            </div>
+
+            <div class="ingredients-section">
+                <h2>Ingredients</h2>
+                <div class="ingredients-list">
+                    @for (item of getIngredients(recipe); track item.ingredient) {
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">{{ item.ingredient }}</span>
+                        <span class="ingredient-measure">{{ item.measure }}</span>
+                    </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Instructions -->
+        <section class="instructions-section">
+            <h2>Instructions</h2>
+            <div class="instructions-content">
+                @for (step of getInstructionsArray(recipe.strInstructions); track step; let i = $index) {
+                <div class="instruction-step">
+                    <span class="step-number">{{ i + 1 }}</span>
+                    <p class="step-text">{{ step }}</p>
+                </div>
+                }
+            </div>
+        </section>
+
+        <!-- Footer Actions -->
+        <footer class="recipe-footer">
+            <p-button label="Back to Recipes" icon="pi pi-arrow-left" styleClass="p-button-text" (click)="goBack()" />
+            <div class="footer-actions">
+                @if (recipe.strYoutube) {
+                <p-button icon="pi pi-youtube" label="Watch Video" styleClass="p-button-danger"
+                    (click)="watchVideo(recipe.strYoutube)" />
+                }
+                <p-button label="View Original" icon="pi pi-external-link" styleClass="view-original-btn"
+                    (click)="viewSource(recipe.strSource || 'https://www.themealdb.com/')" />
+            </div>
+        </footer>
+    </div>
+    }
+</div>
