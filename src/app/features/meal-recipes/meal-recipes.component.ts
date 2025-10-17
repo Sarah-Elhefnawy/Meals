@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MealsService } from '../../core/services/meals.service';
 import { IMealRecipes } from '../../core/interfaces/meal-recipes.interface';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -7,41 +8,57 @@ import { TagModule } from 'primeng/tag';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinner } from "primeng/progressspinner";
 
 @Component({
   selector: 'app-meal-recipes',
-  imports: [CommonModule, CardModule, ButtonModule, TagModule, DialogModule, TooltipModule],
+  imports: [CommonModule, CardModule, ButtonModule, TagModule, DialogModule, TooltipModule, ProgressSpinner],
   templateUrl: './meal-recipes.component.html',
   styleUrl: './meal-recipes.component.scss'
 })
 export class MealRecipesComponent implements OnInit {
   private _Router = inject(Router);
+  private _ActivatedRoute = inject(ActivatedRoute);
+  private _MealsService = inject(MealsService);
+  private _cdr = inject(ChangeDetectorRef);
 
   mealRecipes: IMealRecipes[] = [];
   categoryName: string = '';
+  loading: boolean = true;
 
   ngOnInit() {
-    console.log('MealRecipesComponent initialized');
-    
-    // Method 1: Get from current navigation (works during navigation)
-    const navigation = this._Router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.mealRecipes = navigation.extras.state['mealRecipes'] || [];
-      this.categoryName = navigation.extras.state['categoryName'] || 'Recipes';
-    } else {
-      // Method 2: Get from browser history (works after page reload/navigation)
-      const state = history.state;
-      if (state) {
-        this.mealRecipes = state['mealRecipes'] || [];
-        this.categoryName = state['categoryName'] || 'Recipes';
+    this._ActivatedRoute.queryParams.subscribe(params => {
+      const category = params['category'];
+      if (category) {
+        this.categoryName = category;
+        this.loadRecipes(category);
+      } else {
+        this.loading = false;
+        this._cdr.detectChanges();
       }
-    }
+    });
+  }
 
-    console.log('Final recipes:', this.mealRecipes);
+  loadRecipes(categoryName: string) {
+    this.loading = true;
+    this._MealsService.getCategoryMealsByName(categoryName).subscribe({
+      next: (value) => {
+        setTimeout(() => {
+          this.mealRecipes = value.meals;
+          this.loading = false;
+          this._cdr.detectChanges();
+        });
+      },
+      error: (err) => {
+        setTimeout(() => {
+          this.loading = false;
+          this._cdr.detectChanges();
+        });
+      }
+    });
   }
 
   viewRecipeDetail(recipe: IMealRecipes) {
-    // Navigate to recipe detail page with meal ID
     this._Router.navigate(['/recipe-detail', recipe.idMeal]);
   }
 

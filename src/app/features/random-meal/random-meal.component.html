@@ -1,0 +1,45 @@
+<div class="random-meals-page">
+  <section class="page-header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="page-title">Discover Random Recipes</h1>
+        <p class="page-subtitle">Get inspired with randomly selected recipes from around the world</p>
+        <button class="refresh-btn" (click)="refreshRandomMeals()" [disabled]="loading">
+          {{ loading ? 'Loading...' : 'Shuffle Recipes' }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="random-meals-section">
+    <div class="container">
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Loading delicious recipes...</p>
+      </div>
+
+      <!-- Random Meals Grid -->
+      <div class="meals-grid" *ngIf="!loading && randomMeals.length > 0">
+        <div 
+          *ngFor="let meal of randomMeals" 
+          class="meal-card"
+          [routerLink]="['/recipe-detail', meal.idMeal]">
+          <div class="card-image">
+            <img [src]="meal.strMealThumb" [alt]="meal.strMeal" (error)="handleImageError($event)">
+          </div>
+          <div class="card-content">
+            <h3>{{ meal.strMeal }}</h3>
+            <div class="meal-meta">
+              <span *ngIf="meal.strCategory" class="category">{{ meal.strCategory }}</span>
+              <span *ngIf="meal.strArea" class="area">{{ meal.strArea }}</span>
+            </div>
+            <div class="view-recipe">
+              View Recipe →
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

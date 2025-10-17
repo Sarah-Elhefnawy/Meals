@@ -8,234 +8,191 @@
           curated collection!</p>
         <div class="hero-actions">
           <p-button label="Explore Recipes" icon="pi pi-search" styleClass="p-button-primary p-button-lg"
-            routerLink="/categories">
+            routerLink="/search">
           </p-button>
-          <p-button label="Get Random Recipe" icon="pi pi-random" styleClass="p-button-outlined p-button-lg">
+          <p-button label="Browse Categories" icon="pi pi-list" styleClass="p-button-outlined p-button-lg"
+            routerLink="/category">
           </p-button>
-          <!-- <p-button 
-            label="Get Random Recipe" 
-            icon="pi pi-random" 
-            styleClass="p-button-outlined p-button-lg"
-            (onClick)="getRandomRecipe()">
-          </p-button> -->
         </div>
         <div class="hero-stats">
           <div class="stat">
-            <span class="stat-number">1000+</span>
-            <span class="stat-label">Recipes</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">50+</span>
+            <span class="stat-number">{{categories.length}}+</span>
             <span class="stat-label">Categories</span>
           </div>
           <div class="stat">
-            <span class="stat-number">30+</span>
+            <span class="stat-number">{{areas.length}}+</span>
             <span class="stat-label">Countries</span>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section class="about-section">
-    <div class="container">
-      <div class="about-content">
-        <div class="about-text">
-          <h2>Your Kitchen Companion</h2>
-          <p>Welcome to Recipe Finder, your ultimate destination for culinary inspiration. We believe that cooking
-            should be accessible, enjoyable, and delicious for everyone.</p>
-          <p>Powered by TheMealDB API, we bring you authentic recipes from every corner of the globe. Whether you're a
-            beginner cook or a seasoned chef, you'll find something to spark your creativity.</p>
-          <div class="features-grid">
-            <div class="feature">
-              <i class="pi pi-globe" style="color: #4CAF50;"></i>
-              <span>Global Cuisines</span>
-            </div>
-            <div class="feature">
-              <i class="pi pi-clock" style="color: #FF9800;"></i>
-              <span>Quick & Easy</span>
-            </div>
-            <div class="feature">
-              <i class="pi pi-heart" style="color: #F44336;"></i>
-              <span>Dietary Options</span>
-            </div>
-            <div class="feature">
-              <i class="pi pi-star" style="color: #FFD700;"></i>
-              <span>Chef Curated</span>
-            </div>
+          <div class="stat">
+            <span class="stat-number">300+</span>
+            <span class="stat-label">Ingredients</span>
           </div>
         </div>
-        <div class="about-image">
-          <img src="./Home/homeeee.jpg" alt="Cooking Illustration" class="illustration">
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- Gallery Sections -->
-  <section class="gallery-section">
-    <div class="container">
-
-      <!-- Categories Gallery -->
-      <div class="gallery-category">
-        <div class="section-header">
-          <h2>Browse by Category</h2>
-          <p>Find recipes that match your mood and occasion</p>
+  <!-- Main Content with Unified Background -->
+  <div class="main-content">
+    <!-- About Section (Always shows immediately) -->
+    <section class="about-section">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2>Your Kitchen Companion</h2>
+            <p>Welcome to Recipe Finder, your ultimate destination for culinary inspiration. We believe that cooking
+              should be accessible, enjoyable, and delicious for everyone.</p>
+            <p>Powered by TheMealDB API, we bring you authentic recipes from every corner of the globe. Whether you're a
+              beginner cook or a seasoned chef, you'll find something to spark your creativity.</p>
+            <div class="features-grid">
+              <div class="feature">
+                <i class="pi pi-globe" style="color: #4CAF50;"></i>
+                <span>Global Cuisines</span>
+              </div>
+              <div class="feature">
+                <i class="pi pi-clock" style="color: #FF9800;"></i>
+                <span>Quick & Easy</span>
+              </div>
+              <div class="feature">
+                <i class="pi pi-heart" style="color: #F44336;"></i>
+                <span>Dietary Options</span>
+              </div>
+              <div class="feature">
+                <i class="pi pi-star" style="color: #FFD700;"></i>
+                <span>Chef Curated</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-image">
+            <img src="./Home/burger-with-fries.jpg" alt="Cooking Ingredients" class="about-img">
+          </div>
         </div>
-        <div class="gallery-grid">
-          <div class="gallery-card" *ngFor="let category of categories">
-            <div class="card-image">
-              <img [src]="category.thumbnail" [alt]="category.name">
-              <div class="card-overlay">
-                <h3>{{category.name}}</h3>
-                <p>{{category.count}} recipes</p>
+      </div>
+    </section>
+
+    <!-- Main Loading State -->
+    <div class="main-loading" *ngIf="loading.all">
+      <div class="loading-content">
+        <i class="pi pi-spin pi-spinner" style="font-size: 3rem;"></i>
+        <h3>Loading Culinary Delights</h3>
+        <p>Preparing your recipe journey...</p>
+      </div>
+    </div>
+
+    <!-- Data Sections (Only show when not loading) -->
+    <div *ngIf="!loading.all">
+      <!-- Categories Section -->
+      <section class="categories-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Browse by Category</h2>
+            <p>Find recipes that match your mood and occasion</p>
+          </div>
+
+          <div class="categories-grid">
+            <div class="category-card" *ngFor="let category of categories" [routerLink]="['/search']"
+              [queryParams]="{type: 'category', query: category.strCategory}">
+              <div class="category-icon">
+                <i class="pi pi-tag"></i>
+              </div>
+              <h3>{{category.strCategory}}</h3>
+              <p>Explore recipes</p>
+              <div class="category-arrow">
+                <i class="pi pi-arrow-right"></i>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Areas Gallery -->
-      <div class="gallery-category">
-        <div class="section-header">
-          <h2>Explore by Region</h2>
-          <p>Travel the world through your taste buds</p>
-        </div>
-        <div class="gallery-grid">
-          <div class="gallery-card" *ngFor="let area of areas">
-            <div class="card-image area-card">
-              <img [src]="area.flag" [alt]="area.name">
-              <div class="card-overlay">
-                <h3>{{area.name}} Cuisine</h3>
-                <p>Traditional flavors</p>
+      <!-- Cuisines Section -->
+      <section class="cuisines-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Explore World Cuisines</h2>
+            <p>Travel the world through your taste buds</p>
+          </div>
+
+          <div class="cuisines-grid">
+            <div class="cuisine-card" *ngFor="let area of areas.slice(0, 12)" [routerLink]="['/search']"
+              [queryParams]="{type: 'area', query: area.strArea}">
+              <div class="cuisine-icon">
+                <i class="pi pi-map-marker"></i>
+              </div>
+              <h3>{{area.strArea}}</h3>
+              <p>Traditional flavors</p>
+              <div class="cuisine-arrow">
+                <i class="pi pi-arrow-right"></i>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Ingredients Gallery -->
-      <div class="gallery-category">
-        <div class="section-header">
-          <h2>Cook by Ingredient</h2>
-          <p>Make the most of what's in your pantry</p>
-        </div>
-        <div class="ingredients-grid">
-          <div class="ingredient-card" *ngFor="let ingredient of ingredients">
-            <img [src]="ingredient.image" [alt]="ingredient.name">
-            <span>{{ingredient.name}}</span>
+      <!-- Ingredients Section -->
+      <section class="ingredients-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Popular Ingredients</h2>
+            <p>Make the most of what's in your pantry</p>
+          </div>
+
+          <div class="ingredients-scroll">
+            <div class="ingredient-item" *ngFor="let ingredient of ingredients" [routerLink]="['/search']"
+              [queryParams]="{type: 'ingredient', query: ingredient.strIngredient}">
+              <span>{{ingredient.strIngredient}}</span>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-    </div>
-  </section>
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about our recipe platform</p>
+          </div>
 
-  <!-- Frequent Question Sections -->
-  <section class="question-section">
-    <div class="container">
-      <div class="section-header">
-          <h2>Have some doupts?</h2>
-          <p>Here are some frequent questions</p>
+          <p-accordion [value]="0">
+            <p-accordion-panel [value]="0">
+              <p-accordion-header>
+                <span class="accordion-question">How do I search for recipes?</span>
+              </p-accordion-header>
+              <p-accordion-content>
+                <p class="questions-p">
+                  You can search for recipes by name, ingredient, category, or cuisine area. Use our search page with
+                  multiple filter options to find exactly what you're looking for.
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+
+            <p-accordion-panel [value]="1">
+              <p-accordion-header>
+                <span class="accordion-question">Are the recipes free to use?</span>
+              </p-accordion-header>
+              <p-accordion-content>
+                <p class="questions-p">
+                  Yes! All recipes on our platform are completely free to access and use. We believe good food should be
+                  accessible to everyone.
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+
+            <p-accordion-panel [value]="2">
+              <p-accordion-header>
+                <span class="accordion-question">What cuisines do you cover?</span>
+              </p-accordion-header>
+              <p-accordion-content>
+                <p class="questions-p">
+                  We cover cuisines from over {{areas.length}} countries including American, Italian, Chinese, Indian,
+                  Mexican, and many more traditional and international cuisines.
+                </p>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </p-accordion>
         </div>
-
-      <p-accordion value="0">
-        <p-accordion-panel value="0">
-          <p-accordion-header>
-            <ng-template #toggleicon let-active="active">
-              @if (active) {
-              <i class="pi pi-minus"></i>
-              } @else {
-              <i class="pi pi-plus"></i>
-              }
-            </ng-template>
-            <span class="flex items-center gap-10 w-full">
-              <span class="font-bold whitespace-nowrap">Amy Elsner</span>
-            </span>
-          </p-accordion-header>
-          <p-accordion-content>
-            <p class="questions-p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore
-              magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-              commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-              id est
-              laborum.
-            </p>
-          </p-accordion-content>
-        </p-accordion-panel>
-        <p-accordion-panel value="1">
-          <p-accordion-header>
-            <ng-template #toggleicon let-active="active">
-              @if (active) {
-              <i class="pi pi-minus"></i>
-              } @else {
-              <i class="pi pi-plus"></i>
-              }
-            </ng-template>
-            <span class="flex items-center gap-10 w-full">
-              <span class="font-bold whitespace-nowrap">Onyama Limba</span>
-            </span>
-          </p-accordion-header>
-          <p-accordion-content>
-            <p class="questions-p">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
-              rem
-              aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-              explicabo. Nemo
-              enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos
-              qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-            </p>
-          </p-accordion-content>
-        </p-accordion-panel>
-        <p-accordion-panel value="2">
-          <p-accordion-header>
-            <ng-template #toggleicon let-active="active">
-              @if (active) {
-              <i class="pi pi-minus"></i>
-              } @else {
-              <i class="pi pi-plus"></i>
-              }
-            </ng-template>
-            <span class="flex items-center gap-10 w-full">
-              <span class="font-bold whitespace-nowrap">Ioni Bowcher</span>
-            </span>
-          </p-accordion-header>
-          <p-accordion-content>
-            <p class="questions-p">
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-              atque
-              corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt
-              in
-              culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis
-              est et
-              expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
-              minus.
-            </p>
-          </p-accordion-content>
-        </p-accordion-panel>
-      </p-accordion>
-
+      </section>
     </div>
-  </section>
-
-  <!-- CTA Section -->
-  <!-- <section class="cta-section">
-    <div class="container">
-      <div class="cta-content">
-        <h2>Ready to Start Cooking?</h2>
-        <p>Join thousands of home cooks discovering new recipes every day</p>
-        <p-button 
-          label="Browse All Recipes" 
-          icon="pi pi-arrow-right" 
-          styleClass="p-button-primary p-button-lg"
-          routerLink="/categories">
-        </p-button>
-      </div>
-    </div>
-  </section> -->
+  </div>
 </div>

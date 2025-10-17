@@ -1,0 +1,44 @@
+<div class="ingredient-page">
+  <section class="page-header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="page-title">Browse by Ingredient</h1>
+        <p class="page-subtitle">Find recipes based on ingredients you have or love</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ingredients-section">
+    <div class="container">
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Loading ingredients...</p>
+      </div>
+
+      <!-- Ingredients Grid -->
+      <div class="ingredients-grid" *ngIf="!loading">
+        <div 
+          *ngFor="let ingredient of ingredients" 
+          class="ingredient-card"
+          [routerLink]="['/ingredient-meals', ingredient.strIngredient]">
+          <div class="card-image">
+            <img 
+              [src]="getIngredientImage(ingredient.strIngredient)" 
+              [alt]="ingredient.strIngredient"
+              (error)="handleImageError($event)">
+          </div>
+          <div class="card-content">
+            <h3>{{ ingredient.strIngredient }}</h3>
+            <p class="ingredient-desc" *ngIf="ingredient.strDescription">
+              {{ (ingredient.strDescription | slice:0:100) + '...' }}
+            </p>
+            <div class="explore-btn">
+              Find Recipes ›
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

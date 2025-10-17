@@ -36,7 +36,6 @@ export class RecipeDetailComponent implements OnInit {
       if (mealId) {
         this.loadRecipeDetails(mealId);
       } else {
-        // Use setTimeout to avoid change detection error
         setTimeout(() => {
           this.error = 'No recipe ID provided';
           this.loading = false;
@@ -55,7 +54,6 @@ export class RecipeDetailComponent implements OnInit {
         setTimeout(() => {
           if (response.meals && response.meals.length > 0) {
             this.recipe = response.meals[0];
-            console.log('Recipe details loaded:', this.recipe);
           } else {
             this.error = 'Recipe not found';
           }
@@ -94,7 +92,6 @@ export class RecipeDetailComponent implements OnInit {
     const lines = instructions.split('\r\n').filter(line => line.trim() !== '');
 
     return lines.map(line => {
-      // Remove step numbering patterns but keep the actual instruction
       return line
         .replace(/^(STEP\s*\d+|Step\s*\d+|\d+\.?)\s*/i, '')
         .trim();
@@ -115,9 +112,5 @@ export class RecipeDetailComponent implements OnInit {
     if (sourceUrl) {
       window.open(sourceUrl, '_blank');
     }
-  }
-
-  goBack() {
-    this._Router.navigate(['/meal-recipe']);
   }
 }

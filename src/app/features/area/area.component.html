@@ -1,0 +1,37 @@
+<div class="area-page">
+  <section class="page-header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="page-title">Explore by Cuisine</h1>
+        <p class="page-subtitle">Discover recipes from different culinary traditions around the world</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="areas-section">
+    <div class="container">
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Loading cuisines...</p>
+      </div>
+
+      <!-- Areas Grid -->
+      <div class="areas-grid" *ngIf="!loading">
+        <div 
+          *ngFor="let area of areas" 
+          class="area-card"
+          [routerLink]="['/area-meals', area.strArea]">
+          <div class="card-content">
+            <i class="flag-icon">🌍</i>
+            <h3>{{ area.strArea }} Cuisine</h3>
+            <p>Explore traditional recipes</p>
+            <div class="explore-btn">
+              Explore ›
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -9,24 +9,31 @@
       />
       <div class="header-text">
         <h1 class="page-title">{{ categoryName }} Recipes</h1>
-        <p class="recipe-count">{{ mealRecipes.length }} delicious recipes found</p>
-      </div>
-      <div class="header-actions">
-        <p-button 
-          icon="pi pi-sort-alt" 
-          label="Sort" 
-          styleClass="sort-btn"
-        />
+        <p class="recipe-count">
+          @if (loading) {
+            Loading recipes...
+          } @else {
+            {{ mealRecipes.length }} delicious recipes found
+          }
+        </p>
       </div>
     </div>
   </header>
 
+  <!-- Loading State -->
+  @if (loading) {
+    <div class="loading-section">
+      <p-progressSpinner styleClass="custom-spinner" strokeWidth="4" />
+      <p class="loading-text">Loading {{ categoryName }} recipes...</p>
+    </div>
+  }
+
   <!-- Empty State -->
-  @if (mealRecipes.length === 0) {
+  @if (!loading && mealRecipes.length === 0) {
     <div class="empty-state">
       <div class="empty-icon">🍳</div>
       <h3>No Recipes Found</h3>
-      <p>We couldn't find any recipes for this category.</p>
+      <p>We couldn't find any recipes for {{ categoryName }}.</p>
       <p-button 
         label="Back to Categories" 
         icon="pi pi-arrow-left"
@@ -36,8 +43,8 @@
     </div>
   }
 
-  <!-- Masonry Grid -->
-  @if (mealRecipes.length > 0) {
+  <!-- Recipes Grid -->
+  @if (!loading && mealRecipes.length > 0) {
     <div class="masonry-grid">
       @for (recipe of mealRecipes; track recipe.idMeal; let i = $index) {
         <div class="masonry-item" [style.animation-delay]="i * 0.1 + 's'">
@@ -54,9 +61,6 @@
                   value="View Recipe" 
                   styleClass="view-tag"
                 />
-              </div>
-              <div class="recipe-badge">
-                <i class="pi pi-heart"></i>
               </div>
             </div>
 

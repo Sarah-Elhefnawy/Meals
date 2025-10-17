@@ -13,7 +13,6 @@
         <i class="pi pi-exclamation-triangle" style="font-size: 3rem; color: #f44336;"></i>
         <h3>Error Loading Recipe</h3>
         <p>{{ error }}</p>
-        <p-button label="Go Back" icon="pi pi-arrow-left" styleClass="p-button-outlined" (click)="goBack()" />
     </div>
     }
 
@@ -22,7 +21,6 @@
     <div class="recipe-content">
         <!-- Header -->
         <header class="recipe-header">
-            <p-button icon="pi pi-arrow-left" styleClass="back-btn p-button-text" (click)="goBack()" />
             <div class="header-content">
                 <h1 class="recipe-title">{{ recipe.strMeal }}</h1>
                 <div class="recipe-meta">
@@ -69,7 +67,6 @@
 
         <!-- Footer Actions -->
         <footer class="recipe-footer">
-            <p-button label="Back to Recipes" icon="pi pi-arrow-left" styleClass="p-button-text" (click)="goBack()" />
             <div class="footer-actions">
                 @if (recipe.strYoutube) {
                 <p-button icon="pi pi-youtube" label="Watch Video" styleClass="p-button-danger"

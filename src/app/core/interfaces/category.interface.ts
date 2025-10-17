@@ -1,6 +1,6 @@
 export interface ICategory {
-	idCategory: string;
+	idCategory?: string;
 	strCategory: string;
-	strCategoryThumb: string;
-	strCategoryDescription: string;
+	strCategoryThumb?: string;
+	strCategoryDescription?: string;
 }

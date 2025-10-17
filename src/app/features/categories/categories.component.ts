@@ -27,17 +27,8 @@ export class CategoriesComponent {
   getCategories() {
     this.loading = true;
     this._MealsService.getAllCategories().subscribe({
-      // next: (value) => {
-      //   this.categories = value.categories;
-      //   this.loading = false;
-      // },
-      // error: (err) => {
-      //   console.log(err);
-      //   this.loading = false;
-      // },
       next: (value) => {
         this.categories = value.categories;
-        // Use setTimeout to defer the change to next tick
         setTimeout(() => {
           this.loading = false;
           this._cdr.detectChanges();
@@ -55,33 +46,28 @@ export class CategoriesComponent {
 
   getOneMealDetail() {            //              not yet
     this._MealsService.getMealDetailsById('52772').subscribe({
-      next:(value)=> {
-        console.log('here'+value);
+      next: (value) => {
+        console.log('here' + value);
       },
-      error:(err)=> {
+      error: (err) => {
         console.log(err);
       },
     })
   }
 
-  // In getCategoryMeals method:
-getCategoryMeals(categoryName: string) {
-  this._MealsService.getCategoryMealsByName(categoryName).subscribe({
-    next: (value) => {
-      console.log('API Response:', value); // Debug log
-      this.CMealRecipes = value.meals;
-      this._Router.navigate(['/meal-recipe'], {  // Fixed path
-        state: { 
-          mealRecipes: this.CMealRecipes, 
-          categoryName: categoryName 
-        }
-      });
-    },
-    error: (err) => {
-      console.log('Error:', err);
-    },
-  })
-}
+  getCategoryMeals(categoryName: string) {
+    this._MealsService.getCategoryMealsByName(categoryName).subscribe({
+      next: (value) => {
+        this.CMealRecipes = value.meals;
+        this._Router.navigate(['/meal-recipe'], {
+          queryParams: { category: categoryName }
+        })
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    })
+  }
 
   ngOnInit() {
     this.getCategories();

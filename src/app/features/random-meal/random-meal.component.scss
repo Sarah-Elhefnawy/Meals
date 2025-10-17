@@ -1,0 +1,62 @@
+.random-meals-page {
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.page-header {
+  padding: 3rem 0;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border-bottom: 1px solid #333;
+
+  .header-content {
+    text-align: center;
+
+    .page-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #FFD700, #FF6B6B, #4CAF50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: #cccccc;
+      margin-bottom: 2rem;
+    }
+
+    .refresh-btn {
+      background: #FFD700;
+      color: #000000;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: #FFC400;
+        transform: translateY(-2px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.random-meals-section {
+  padding: 3rem 0;
+
+  .meals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}

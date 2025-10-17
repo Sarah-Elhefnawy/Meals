@@ -1,1 +1,128 @@
-<p>search works!</p>
+<div class="search-page">
+  <!-- Search Header -->
+  <section class="search-header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="page-title">Discover Amazing Recipes</h1>
+        <p class="page-subtitle">Search through thousands of recipes by name, ingredient, category, or cuisine</p>
+
+        <!-- Search Form -->
+        <div class="search-form">
+          <div class="search-controls">
+            <!-- Search Type Selector -->
+            <div class="search-type-selector">
+              <label>Search by:</label>
+              <div class="type-buttons">
+                <button [class.active]="searchType === 'name'" (click)="searchType = 'name'; clearSearch()"
+                  [disabled]="loading">
+                  Name
+                </button>
+                <button [class.active]="searchType === 'ingredient'" (click)="searchType = 'ingredient'; clearSearch()"
+                  [disabled]="loading">
+                  Ingredient
+                </button>
+                <button [class.active]="searchType === 'category'" (click)="searchType = 'category'; clearSearch()"
+                  [disabled]="loading">
+                  Category
+                </button>
+                <button [class.active]="searchType === 'area'" (click)="searchType = 'area'; clearSearch()"
+                  [disabled]="loading">
+                  Cuisine
+                </button>
+                <button [class.active]="searchType === 'letter'" (click)="searchType = 'letter'; clearSearch()"
+                  [disabled]="loading">
+                  Letter
+                </button>
+              </div>
+            </div>
+
+            <!-- Search Input -->
+            <div class="search-input-group" *ngIf="isInputSearch()">
+              <input type="text" [(ngModel)]="searchQuery" [placeholder]="getSearchPlaceholder()"
+                (keyup.enter)="search()" [disabled]="loading" class="search-input">
+              <button class="search-btn" (click)="search()" [disabled]="loading">
+                <span *ngIf="!loading">Search</span>
+                <span *ngIf="loading">Searching...</span>
+              </button>
+            </div>
+
+            <!-- Quick Options -->
+            <div class="quick-options" *ngIf="!isInputSearch()">
+              <h3>{{getSearchPlaceholder()}}</h3>
+
+              <div class="options-grid" *ngIf="searchType === 'category'">
+                <button *ngFor="let category of categories" class="option-btn"
+                  (click)="quickSearch('category', category)" [disabled]="loading">
+                  {{category}}
+                </button>
+              </div>
+
+              <div class="options-grid" *ngIf="searchType === 'area'">
+                <button *ngFor="let area of areas" class="option-btn" (click)="quickSearch('area', area)"
+                  [disabled]="loading">
+                  {{area}}
+                </button>
+              </div>
+
+              <div class="letters-grid" *ngIf="searchType === 'letter'">
+                <button *ngFor="let letter of letters" class="letter-btn" (click)="quickSearch('letter', letter)"
+                  [disabled]="loading">
+                  {{letter}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results -->
+  <section class="search-results" *ngIf="hasSearched">
+    <div class="container">
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="error && !loading">
+        <span>{{error}}</span>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Searching for delicious recipes...</p>
+        <small>This may take a few seconds</small>
+      </div>
+
+      <!-- Results Grid -->
+      <div class="results-grid" *ngIf="!loading && searchResults.length > 0">
+        <div class="results-header">
+          <h2>Found {{searchResults.length}} Recipe{{searchResults.length > 1 ? 's' : ''}}</h2>
+          <button class="clear-btn" (click)="clearSearch()">Clear Results</button>
+        </div>
+
+        <div class="meals-grid">
+          <div *ngFor="let meal of searchResults" class="meal-card" [routerLink]="['/recipe-detail', meal.idMeal]">
+            <div class="card-image">
+              <img [src]="meal.strMealThumb" [alt]="meal.strMeal" (error)="handleImageError($event)">
+            </div>
+            <div class="card-content">
+              <h3>{{meal.strMeal}}</h3>
+              <div class="meal-meta">
+                <span *ngIf="meal.strCategory" class="category">{{meal.strCategory}}</span>
+                <span *ngIf="meal.strArea" class="area">{{meal.strArea}}</span>
+              </div>
+              <div class="view-recipe">
+                View Recipe →
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div class="no-results" *ngIf="!loading && searchResults.length === 0 && !error && hasSearched">
+        <h3>No recipes found</h3>
+        <p>Try adjusting your search terms or try a different search type.</p>
+      </div>
+    </div>
+  </section>
+</div>
