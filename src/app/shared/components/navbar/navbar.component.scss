@@ -1,0 +1,122 @@
+// Main Navbar Styles
+.navbar-toolbar {
+  border-radius: 3rem !important;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  border: 1px solid #444;
+  padding: 0.5rem 1.5rem;
+  margin: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+  }
+}
+
+// Logo and Title
+.navbar-logo {
+  width: 22px;
+  height: 22px;
+  margin-right: 0.75rem;
+}
+
+.navbar-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: white;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// Desktop Navigation
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// Mobile Drawer Styles
+:host ::ng-deep {
+  // Drawer Navigation
+  .drawer-nav {
+    display: flex;
+    flex-direction: column !important;
+    gap: 0.5rem;
+  }
+
+  // Drawer Buttons
+  .drawer-button {
+    color: white !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    padding: 1rem 1.5rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      background: rgba(255, 215, 0, 0.1) !important;
+      color: #FFD700 !important;
+      transform: translateX(5px);
+    }
+  }
+
+  // Drawer Title
+  .drawer-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 0;
+    color: white;
+  }
+
+  // PrimeNG Button overrides for desktop
+  .desktop-nav .p-button {
+    color: white !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #FFD700 !important;
+      background: rgba(255, 215, 0, 0.1) !important;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: block !important;
+  }
+}
+
+// Animation for drawer buttons
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.drawer-button {
+  animation: slideIn 0.3s ease forwards;
+  
+  &:nth-child(1) { animation-delay: 0.05s; }
+  &:nth-child(2) { animation-delay: 0.1s; }
+  &:nth-child(3) { animation-delay: 0.15s; }
+  &:nth-child(4) { animation-delay: 0.2s; }
+  &:nth-child(5) { animation-delay: 0.25s; }
+  &:nth-child(6) { animation-delay: 0.3s; }
+}
+
+// Dark theme consistency
+:host {
+  display: block;
+  background: transparent;
+}

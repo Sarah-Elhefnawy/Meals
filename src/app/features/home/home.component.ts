@@ -31,12 +31,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   categories: ICategory[] = [];
   areas: IArea[] = [];
   ingredients: IIngrediant[] = [];
-  loading = {
-    categories: true,
-    areas: true,
-    ingredients: true,
-    all: true
-  };
 
   ngOnInit() {
     this.loadHomeData();
@@ -48,8 +42,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadHomeData() {
-    this.loading.all = true;
-    
     forkJoin({
       categories: this._MealsService.getCategory(),
       areas: this._MealsService.getArea(),
@@ -59,19 +51,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     .subscribe({
       next: (responses) => {
         this.categories = responses.categories?.meals || [];
-        this.loading.categories = false;
-        
         this.areas = responses.areas?.meals || [];
-        this.loading.areas = false;
-        
-        this.ingredients = (responses.ingredients?.meals || []).slice(0, 12);
-        this.loading.ingredients = false;
-        
-        this.loading.all = false;
-        
+        this.ingredients = responses.ingredients?.meals || [];
         this._cdr.detectChanges();
-        
-        console.log('Home data loaded successfully');
       },
       error: (err) => {
         console.error('Error loading home data:', err);
@@ -84,12 +66,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.categories = [];
     this.areas = [];
     this.ingredients = [];
-    
-    this.loading.categories = false;
-    this.loading.areas = false;
-    this.loading.ingredients = false;
-    this.loading.all = false;
-    
     this._cdr.detectChanges();
   }
 }

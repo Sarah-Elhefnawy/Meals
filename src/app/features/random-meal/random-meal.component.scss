@@ -54,9 +54,248 @@
 .random-meals-section {
   padding: 3rem 0;
 
-  .meals-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+  .meal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .meal-card {
+    background: #2d2d2d;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    max-width: 600px;
+    width: 100%;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      
+      .view-recipe {
+        transform: translateX(5px);
+      }
+    }
+
+    .card-image {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+    }
+
+    .card-content {
+      padding: 2rem;
+
+      h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      .meal-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+
+        .category, .area {
+          background: rgba(255, 215, 0, 0.1);
+          color: #FFD700;
+          padding: 0.5rem 1rem;
+          border-radius: 15px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .area {
+          background: rgba(76, 175, 80, 0.1);
+          color: #4CAF50;
+          border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+      }
+
+      .meal-instructions {
+        color: #cccccc;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+      }
+
+      .view-recipe {
+        color: #FFD700;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: transform 0.3s ease;
+      }
+    }
+  }
+
+  .refresh-section {
+    text-align: center;
+    
+    .refresh-btn.large {
+      background: linear-gradient(45deg, #FFD700, #FF6B6B);
+      color: #000000;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+
+      &:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+
+  .loading-state {
+    text-align: center;
+    padding: 4rem 0;
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #333;
+      border-top: 4px solid #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    p {
+      color: #cccccc;
+      font-size: 1.1rem;
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 0;
+
+    .empty-card {
+      background: #2d2d2d;
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+      i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      p {
+        color: #cccccc;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// Loading animation
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .page-header {
+    padding: 2rem 0;
+
+    .header-content {
+      .page-title {
+        font-size: 2.2rem;
+      }
+
+      .page-subtitle {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .random-meals-section {
+    padding: 2rem 0;
+
+    .meal-card {
+      max-width: 100%;
+      
+      .card-image {
+        height: 250px;
+      }
+
+      .card-content {
+        padding: 1.5rem;
+
+        h3 {
+          font-size: 1.5rem;
+        }
+
+        .meal-meta {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+    }
+
+    .refresh-section {
+      .refresh-btn.large {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    .header-content {
+      .page-title {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  .random-meals-section {
+    .meal-card {
+      .card-image {
+        height: 200px;
+      }
+
+      .card-content {
+        padding: 1rem;
+      }
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MealsService } from '../../core/services/meals.service';
@@ -13,41 +13,33 @@ import { IMealRecipes } from '../../core/interfaces/meal-recipes.interface';
 })
 export class RandomMealComponent implements OnInit {
   private _MealsService = inject(MealsService);
+  private _cdr = inject(ChangeDetectorRef);
   
-  randomMeals: IMealRecipes[] = [];
+  currentMeal: IMealRecipes | null = null;
   loading: boolean = false;
 
   ngOnInit() {
-    this.loadRandomMeals();
+    this.loadRandomMeal();
   }
 
-  loadRandomMeals() {
+  loadRandomMeal() {
     this.loading = true;
-    const requests = Array.from({ length: 8 }, () => 
-      this._MealsService.getRandomMeal()
-    );
-
-    // Since we can only get one random meal at a time, we'll make multiple requests
-    requests.forEach(request => {
-      request.subscribe({
-        next: (response) => {
-          if (response.meals && response.meals[0]) {
-            this.randomMeals.push(response.meals[0]);
-          }
-        },
-        error: (err) => {
-          console.error('Error loading random meal:', err);
-        },
-        complete: () => {
-          this.loading = false;
+    this._cdr.detectChanges();
+    
+    this._MealsService.getRandomMeal().subscribe({
+      next: (response) => {
+        if (response.meals && response.meals[0]) {
+          this.currentMeal = response.meals[0];
         }
-      });
+        this.loading = false;
+        this._cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading random meal:', err);
+        this.loading = false;
+        this._cdr.detectChanges();
+      }
     });
-  }
-
-  refreshRandomMeals() {
-    this.randomMeals = [];
-    this.loadRandomMeals();
   }
 
   handleImageError(event: any) {

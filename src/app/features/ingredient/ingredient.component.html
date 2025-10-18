@@ -2,41 +2,63 @@
   <section class="page-header">
     <div class="container">
       <div class="header-content">
-        <h1 class="page-title">Browse by Ingredient</h1>
-        <p class="page-subtitle">Find recipes based on ingredients you have or love</p>
+        <h1 class="page-title">Culinary Ingredients</h1>
+        <p class="page-subtitle">Explore the building blocks of delicious recipes from around the world</p>
+        <div class="ingredient-stats" *ngIf="!loading && ingredients.length > 0">
+          <span class="stat">{{ ingredients.length }} Ingredients Available</span>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="ingredients-section">
     <div class="container">
-      <!-- Loading State -->
+      <!-- Loading State for Initial Load -->
       <div class="loading-state" *ngIf="loading">
         <div class="spinner"></div>
-        <p>Loading ingredients...</p>
+        <p>Loading ingredients gallery...</p>
       </div>
 
-      <!-- Ingredients Grid -->
-      <div class="ingredients-grid" *ngIf="!loading">
+      <!-- Ingredients Grid with Lazy Loading -->
+      <div class="ingredients-grid" *ngIf="!loading && ingredients.length > 0">
+        <!-- Initial 20 ingredients loaded immediately -->
         <div 
-          *ngFor="let ingredient of ingredients" 
+          *ngFor="let ingredient of getVisibleIngredients(); let i = index" 
           class="ingredient-card"
-          [routerLink]="['/ingredient-meals', ingredient.strIngredient]">
+          [style.animation-delay]="(i * 0.05) + 's'"
+          [style.--accent-color]="getIngredientColor(i)">
           <div class="card-image">
             <img 
               [src]="getIngredientImage(ingredient.strIngredient)" 
               [alt]="ingredient.strIngredient"
-              (error)="handleImageError($event)">
+              (error)="handleImageError($event)"
+              loading="lazy"> <!-- Native lazy loading for images -->
+            <div class="image-overlay"></div>
           </div>
           <div class="card-content">
             <h3>{{ ingredient.strIngredient }}</h3>
             <p class="ingredient-desc" *ngIf="ingredient.strDescription">
-              {{ (ingredient.strDescription | slice:0:100) + '...' }}
+              {{ (ingredient.strDescription | slice:0:120) + '...' }}
             </p>
-            <div class="explore-btn">
-              Find Recipes ›
-            </div>
+            <div class="ingredient-id">#{{ ingredient.idIngredient }}</div>
           </div>
+          <div class="card-accent"></div>
+        </div>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="load-more-section" *ngIf="!loading && hasMoreIngredients()">
+        <button class="load-more-btn" (click)="loadMore()">
+          Load More Ingredients
+        </button>
+      </div>
+
+      <!-- All Ingredients Loaded Message -->
+      <div class="completion-message" *ngIf="!loading && !hasMoreIngredients() && ingredients.length > 0">
+        <div class="completion-card">
+          <i>🎉</i>
+          <h3>All Ingredients Loaded!</h3>
+          <p>You've explored all {{ ingredients.length }} ingredients in our collection.</p>
         </div>
       </div>
     </div>

@@ -2,8 +2,8 @@
   <section class="page-header">
     <div class="container">
       <div class="header-content">
-        <h1 class="page-title">Explore by Cuisine</h1>
-        <p class="page-subtitle">Discover recipes from different culinary traditions around the world</p>
+        <h1 class="page-title">Culinary World Tour</h1>
+        <p class="page-subtitle">Explore diverse cuisines from around the globe</p>
       </div>
     </div>
   </section>
@@ -13,23 +13,43 @@
       <!-- Loading State -->
       <div class="loading-state" *ngIf="loading">
         <div class="spinner"></div>
-        <p>Loading cuisines...</p>
+        <p>Discovering world cuisines...</p>
       </div>
 
       <!-- Areas Grid -->
-      <div class="areas-grid" *ngIf="!loading">
+      <div class="areas-grid" *ngIf="!loading && areas.length > 0">
         <div 
-          *ngFor="let area of areas" 
+          *ngFor="let area of areas; let i = index" 
           class="area-card"
-          [routerLink]="['/area-meals', area.strArea]">
+          [style.animation-delay]="(i * 0.1) + 's'">
+          <div class="card-icon">
+            <span class="flag">{{ getAreaFlag(area.strArea) }}</span>
+          </div>
           <div class="card-content">
-            <i class="flag-icon">🌍</i>
-            <h3>{{ area.strArea }} Cuisine</h3>
-            <p>Explore traditional recipes</p>
-            <div class="explore-btn">
-              Explore ›
+            <h3>{{ area.strArea }}</h3>
+            <p class="cuisine-type">{{ area.strArea }} Cuisine</p>
+            <div class="card-decoration">
+              <div class="dot dot-1"></div>
+              <div class="dot dot-2"></div>
+              <div class="dot dot-3"></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section" *ngIf="!loading && areas.length > 0">
+        <div class="stat-card">
+          <div class="stat-number">{{ areas.length }}</div>
+          <div class="stat-label">Cuisines</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">1000+</div>
+          <div class="stat-label">Recipes</div>
         </div>
       </div>
     </div>

@@ -1,10 +1,12 @@
-<p-toolbar [style]="{ 'border-radius': '3rem' }">
-    <ng-template #start [style]="{ 'background-color':'red'}">
-        <img src="./icon.png" alt="" width="22">
+<p-toolbar class="navbar-toolbar">
+    <ng-template #start>
+        <img src="./icon.png" alt="Logo" class="navbar-logo">
+        <span class="navbar-title">Recipe App</span>
     </ng-template>
 
     <ng-template #end>
-        <div class="flex items-center gap-3">
+        <!-- Desktop Navigation -->
+        <div class="desktop-nav">
             <p-button routerLink="home" label="Home" text plain />
             <p-button routerLink="random-meals" label="Random meal" text plain />
             <p-button routerLink="category" label="Categories" text plain />
@@ -12,5 +14,74 @@
             <p-button routerLink="ingredient" label="Ingredients" text plain />
             <p-button routerLink="search" label="Search" text plain />
         </div>
+
+        <!-- Mobile Menu Button -->
+        <button 
+            pButton 
+            icon="pi pi-bars" 
+            class="p-button-text p-button-plain md:hidden" 
+            (click)="drawerVisible = true">
+        </button>
     </ng-template>
 </p-toolbar>
+
+<!-- Mobile Drawer -->
+<p-drawer 
+    [(visible)]="drawerVisible"
+    position="right"
+    class="mobile-drawer">
+    
+    <ng-template pTemplate="header">
+        <h3 class="drawer-title">Navigation</h3>
+    </ng-template>
+    
+    <div class="drawer-nav">
+        <button 
+            pButton 
+            routerLink="home" 
+            label="Home" 
+            class="drawer-button" 
+            (click)="drawerVisible = false">
+        </button>
+
+        <button 
+            pButton 
+            routerLink="random-meals" 
+            label="Random Meal" 
+            class="drawer-button" 
+            (click)="drawerVisible = false">
+        </button>
+
+        <button 
+            pButton 
+            routerLink="category" 
+            label="Categories" 
+            class="drawer-button" 
+            (click)="drawerVisible = false">
+        </button>
+
+        <button 
+            pButton 
+            routerLink="area" 
+            label="Areas" 
+            class="drawer-button" 
+            (click)="drawerVisible = false">
+        </button>
+
+        <button 
+            pButton 
+            routerLink="ingredient" 
+            label="Ingredients" 
+            class="drawer-button" 
+            (click)="drawerVisible = false">
+        </button>
+
+        <button 
+            pButton 
+            routerLink="search" 
+            label="Search" 
+            class="drawer-button" 
+            (click)="drawerVisible = false">
+        </button>
+    </div>
+</p-drawer>

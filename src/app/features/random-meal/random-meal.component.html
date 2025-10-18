@@ -4,8 +4,8 @@
       <div class="header-content">
         <h1 class="page-title">Discover Random Recipes</h1>
         <p class="page-subtitle">Get inspired with randomly selected recipes from around the world</p>
-        <button class="refresh-btn" (click)="refreshRandomMeals()" [disabled]="loading">
-          {{ loading ? 'Loading...' : 'Shuffle Recipes' }}
+        <button class="refresh-btn" (click)="loadRandomMeal()" [disabled]="loading">
+          {{ loading ? 'Loading...' : 'Shuffle New Recipe' }}
         </button>
       </div>
     </div>
@@ -16,28 +16,34 @@
       <!-- Loading State -->
       <div class="loading-state" *ngIf="loading">
         <div class="spinner"></div>
-        <p>Loading delicious recipes...</p>
+        <p>Loading delicious recipe...</p>
       </div>
 
-      <!-- Random Meals Grid -->
-      <div class="meals-grid" *ngIf="!loading && randomMeals.length > 0">
-        <div 
-          *ngFor="let meal of randomMeals" 
-          class="meal-card"
-          [routerLink]="['/recipe-detail', meal.idMeal]">
+      <!-- Single Random Meal -->
+      <div class="meal-container" *ngIf="!loading && currentMeal">
+        <div class="meal-card" [routerLink]="['/recipe-detail', currentMeal.idMeal]">
           <div class="card-image">
-            <img [src]="meal.strMealThumb" [alt]="meal.strMeal" (error)="handleImageError($event)">
+            <img [src]="currentMeal.strMealThumb" [alt]="currentMeal.strMeal" (error)="handleImageError($event)">
           </div>
           <div class="card-content">
-            <h3>{{ meal.strMeal }}</h3>
+            <h3>{{ currentMeal.strMeal }}</h3>
             <div class="meal-meta">
-              <span *ngIf="meal.strCategory" class="category">{{ meal.strCategory }}</span>
-              <span *ngIf="meal.strArea" class="area">{{ meal.strArea }}</span>
+              <span *ngIf="currentMeal.strCategory" class="category">{{ currentMeal.strCategory }}</span>
+              <span *ngIf="currentMeal.strArea" class="area">{{ currentMeal.strArea }}</span>
             </div>
             <div class="view-recipe">
-              View Recipe →
+              View Full Recipe →
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="!loading && !currentMeal">
+        <div class="empty-card">
+          <i>🍳</i>
+          <h3>No Recipe Found</h3>
+          <p>Click the button above to discover a random recipe!</p>
         </div>
       </div>
     </div>

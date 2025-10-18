@@ -10,8 +10,8 @@
           <p-button label="Explore Recipes" icon="pi pi-search" styleClass="p-button-primary p-button-lg"
             routerLink="/search">
           </p-button>
-          <p-button label="Browse Categories" icon="pi pi-list" styleClass="p-button-outlined p-button-lg"
-            routerLink="/category">
+          <p-button label="Browse Random Meal" icon="pi pi-list" styleClass="p-button-outlined p-button-lg"
+            routerLink="/random-meals">
           </p-button>
         </div>
         <div class="hero-stats">
@@ -24,7 +24,7 @@
             <span class="stat-label">Countries</span>
           </div>
           <div class="stat">
-            <span class="stat-number">300+</span>
+            <span class="stat-number">{{ingredients.length}}+</span>
             <span class="stat-label">Ingredients</span>
           </div>
         </div>
@@ -70,129 +70,52 @@
       </div>
     </section>
 
-    <!-- Main Loading State -->
-    <div class="main-loading" *ngIf="loading.all">
-      <div class="loading-content">
-        <i class="pi pi-spin pi-spinner" style="font-size: 3rem;"></i>
-        <h3>Loading Culinary Delights</h3>
-        <p>Preparing your recipe journey...</p>
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Find answers to common questions about our recipe platform</p>
+        </div>
+
+        <p-accordion [value]="0">
+          <p-accordion-panel [value]="0">
+            <p-accordion-header>
+              <span class="accordion-question">How do I search for recipes?</span>
+            </p-accordion-header>
+            <p-accordion-content>
+              <p class="questions-p">
+                You can search for recipes by name, ingredient, category, or cuisine area. Use our search page with
+                multiple filter options to find exactly what you're looking for.
+              </p>
+            </p-accordion-content>
+          </p-accordion-panel>
+
+          <p-accordion-panel [value]="1">
+            <p-accordion-header>
+              <span class="accordion-question">Are the recipes free to use?</span>
+            </p-accordion-header>
+            <p-accordion-content>
+              <p class="questions-p">
+                Yes! All recipes on our platform are completely free to access and use. We believe good food should be
+                accessible to everyone.
+              </p>
+            </p-accordion-content>
+          </p-accordion-panel>
+
+          <p-accordion-panel [value]="2">
+            <p-accordion-header>
+              <span class="accordion-question">What cuisines do you cover?</span>
+            </p-accordion-header>
+            <p-accordion-content>
+              <p class="questions-p">
+                We cover cuisines from over {{areas.length}} countries including American, Italian, Chinese, Indian,
+                Mexican, and many more traditional and international cuisines.
+              </p>
+            </p-accordion-content>
+          </p-accordion-panel>
+        </p-accordion>
       </div>
-    </div>
-
-    <!-- Data Sections (Only show when not loading) -->
-    <div *ngIf="!loading.all">
-      <!-- Categories Section -->
-      <section class="categories-section">
-        <div class="container">
-          <div class="section-header">
-            <h2>Browse by Category</h2>
-            <p>Find recipes that match your mood and occasion</p>
-          </div>
-
-          <div class="categories-grid">
-            <div class="category-card" *ngFor="let category of categories" [routerLink]="['/search']"
-              [queryParams]="{type: 'category', query: category.strCategory}">
-              <div class="category-icon">
-                <i class="pi pi-tag"></i>
-              </div>
-              <h3>{{category.strCategory}}</h3>
-              <p>Explore recipes</p>
-              <div class="category-arrow">
-                <i class="pi pi-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Cuisines Section -->
-      <section class="cuisines-section">
-        <div class="container">
-          <div class="section-header">
-            <h2>Explore World Cuisines</h2>
-            <p>Travel the world through your taste buds</p>
-          </div>
-
-          <div class="cuisines-grid">
-            <div class="cuisine-card" *ngFor="let area of areas.slice(0, 12)" [routerLink]="['/search']"
-              [queryParams]="{type: 'area', query: area.strArea}">
-              <div class="cuisine-icon">
-                <i class="pi pi-map-marker"></i>
-              </div>
-              <h3>{{area.strArea}}</h3>
-              <p>Traditional flavors</p>
-              <div class="cuisine-arrow">
-                <i class="pi pi-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Ingredients Section -->
-      <section class="ingredients-section">
-        <div class="container">
-          <div class="section-header">
-            <h2>Popular Ingredients</h2>
-            <p>Make the most of what's in your pantry</p>
-          </div>
-
-          <div class="ingredients-scroll">
-            <div class="ingredient-item" *ngFor="let ingredient of ingredients" [routerLink]="['/search']"
-              [queryParams]="{type: 'ingredient', query: ingredient.strIngredient}">
-              <span>{{ingredient.strIngredient}}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ Section -->
-      <section class="faq-section">
-        <div class="container">
-          <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
-            <p>Find answers to common questions about our recipe platform</p>
-          </div>
-
-          <p-accordion [value]="0">
-            <p-accordion-panel [value]="0">
-              <p-accordion-header>
-                <span class="accordion-question">How do I search for recipes?</span>
-              </p-accordion-header>
-              <p-accordion-content>
-                <p class="questions-p">
-                  You can search for recipes by name, ingredient, category, or cuisine area. Use our search page with
-                  multiple filter options to find exactly what you're looking for.
-                </p>
-              </p-accordion-content>
-            </p-accordion-panel>
-
-            <p-accordion-panel [value]="1">
-              <p-accordion-header>
-                <span class="accordion-question">Are the recipes free to use?</span>
-              </p-accordion-header>
-              <p-accordion-content>
-                <p class="questions-p">
-                  Yes! All recipes on our platform are completely free to access and use. We believe good food should be
-                  accessible to everyone.
-                </p>
-              </p-accordion-content>
-            </p-accordion-panel>
-
-            <p-accordion-panel [value]="2">
-              <p-accordion-header>
-                <span class="accordion-question">What cuisines do you cover?</span>
-              </p-accordion-header>
-              <p-accordion-content>
-                <p class="questions-p">
-                  We cover cuisines from over {{areas.length}} countries including American, Italian, Chinese, Indian,
-                  Mexican, and many more traditional and international cuisines.
-                </p>
-              </p-accordion-content>
-            </p-accordion-panel>
-          </p-accordion>
-        </div>
-      </section>
-    </div>
+    </section>
   </div>
 </div>

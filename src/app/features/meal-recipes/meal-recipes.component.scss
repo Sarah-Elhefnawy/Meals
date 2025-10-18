@@ -167,25 +167,6 @@ $text-secondary: #B0B0B0;
   transform: scale(1.1);
 }
 
-.image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(transparent 60%, rgba(0, 0, 0, 0.8));
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 1rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.recipe-card:hover .image-overlay {
-  opacity: 1;
-}
-
 ::ng-deep .view-tag {
   background: rgba(255, 255, 255, 0.9) !important;
   color: $dark-black !important;
