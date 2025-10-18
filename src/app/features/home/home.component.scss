@@ -2,31 +2,7 @@
   overflow-x: hidden;
 }
 
-/* Main Loading State */
-.main-loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6rem 2rem;
-  text-align: center;
-}
-
-.loading-content {
-  color: #FFD700;
-
-  h3 {
-    margin: 1.5rem 0 0.5rem 0;
-    color: #ffffff;
-    font-size: 1.5rem;
-  }
-
-  p {
-    color: #cccccc;
-    font-size: 1.1rem;
-  }
-}
-
-/* Hero Section - Made Responsive */
+/* Hero Section - Responsive & Minimal */
 .hero-section {
   height: 70vh;
   min-height: 500px;
@@ -39,7 +15,7 @@
 
   @media (max-width: 480px) {
     height: 50vh;
-    min-height: 300px;
+    min-height: 350px;
   }
 }
 
@@ -50,16 +26,16 @@
   align-items: center;
   justify-content: center;
   position: relative;
-}
 
-.hero-background::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+  }
 }
 
 .hero-content {
@@ -69,6 +45,10 @@
   max-width: 800px;
   padding: 0 2rem;
   z-index: 2;
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+  }
 }
 
 .hero-title {
@@ -83,7 +63,7 @@
 
   @media (max-width: 480px) {
     font-size: 2rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
 }
 
@@ -100,7 +80,7 @@
 
   @media (max-width: 480px) {
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.2rem;
   }
 }
 
@@ -112,8 +92,10 @@
   flex-wrap: wrap;
 
   @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
     gap: 0.75rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
   }
 }
 
@@ -159,18 +141,11 @@
   }
 }
 
-/* Main Content */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-
-  @media (max-width: 768px) {
-    padding: 0 1.5rem;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0 1rem;
+/* Button responsive fixes */
+@media (max-width: 480px) {
+  :host ::ng-deep .hero-actions .p-button {
+    min-width: 200px;
+    justify-content: center;
   }
 }
 
@@ -458,11 +433,6 @@
       width: 200px;
       justify-content: center;
     }
-  }
-
-  .hero-stats {
-    flex-direction: column;
-    gap: 1rem;
   }
 
   .feature .pi {

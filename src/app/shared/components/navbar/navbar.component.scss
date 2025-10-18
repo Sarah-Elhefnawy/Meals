@@ -40,12 +40,59 @@
   }
 }
 
+// Mobile Menu Button - ADD THESE STYLES
+.mobile-menu-button {
+  display: none; // Hidden by default on desktop
+
+  @media (max-width: 768px) {
+    display: block; // Show only on mobile
+  }
+}
+
+// Responsive utility classes - ADD THESE
+.md\:hidden {
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
 // Mobile Drawer Styles
 :host ::ng-deep {
+  .mobile-drawer {
+    .p-drawer {
+      .p-drawer-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+        border-bottom: 1px solid #444;
+        padding: 1.5rem;
+
+        .p-drawer-header-close {
+          color: white;
+          background: transparent;
+          border: none;
+          border-radius: 50%;
+          width: 2rem;
+          height: 2rem;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+
+      .p-drawer-content {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: white;
+        padding: 1rem;
+      }
+    }
+  }
+
   // Drawer Navigation
   .drawer-nav {
     display: flex;
-    flex-direction: column !important;
+    flex-direction: column;
     gap: 0.5rem;
   }
 
@@ -83,12 +130,15 @@
       background: rgba(255, 215, 0, 0.1) !important;
     }
   }
-}
 
-// Responsive Design
-@media (max-width: 768px) {
-  .mobile-menu-button {
-    display: block !important;
+  // Mobile menu button specific styles
+  .mobile-menu-button.p-button {
+    color: white !important;
+    
+    &:hover {
+      color: #FFD700 !important;
+      background: rgba(255, 215, 0, 0.1) !important;
+    }
   }
 }
 
