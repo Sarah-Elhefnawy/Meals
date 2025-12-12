@@ -340,7 +340,7 @@
 
 .accordion-question {
   font-weight: 600;
-  color: #ffffff;
+  // color: #ffffff;
   font-size: 1rem;
 
   @media (max-width: 768px) {
@@ -359,11 +359,14 @@
   .p-accordion {
     .p-accordion-header {
       background: #3d3d3d !important;
+      --p-accordion-header-background: #3d3d3d !important;
       border-color: #555 !important;
+      --p-content-background: transparent !important;
+      transition: none;
 
       .p-accordion-header-link {
         background: #3d3d3d !important;
-        color: #ffffff !important;
+        color: #fff !important;
         border-color: #555 !important;
         padding: 1.25rem;
 
@@ -389,7 +392,7 @@
     }
 
     .p-accordion-header-text {
-      color: #ffffff !important;
+      // color: #ffffff !important;
       font-weight: 600;
     }
   }
@@ -408,7 +411,7 @@
   p {
     margin-top: 1rem;
     font-size: 1.1rem;
-    color: #cccccc;
+    // color: #cccccc;
 
     @media (max-width: 480px) {
       font-size: 1rem;
